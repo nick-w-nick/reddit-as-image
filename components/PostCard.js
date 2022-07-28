@@ -68,20 +68,13 @@ export default function PostCard({ post }) {
         // Get snapshot of this element
         <Container p="sm">
             <Paper px={'lg'} py={'lg'} shadow="xl">
-                {/* <Card shadow="sm" p="lg">
+                <Card shadow="sm" p="lg">
                     <Card.Section>
-                        remove
-                        <Image src={image} width={600} alt={title} />
+                        <Image src={image} height={500} fit={'contain'} alt={title} />
                     </Card.Section>
-                </Card> */}
-                <Text color={primaryTextColor}>
+                </Card>
+                <Text color={primaryTextColor} mt={10}>
                     <Group spacing={'xs'}>
-                        <Avatar
-                            radius={'xl'}
-                            src={'https://i.pravatar.cc/150?img=1'}
-                            size={'sm'}
-                            style={{ display: 'inline-block' }}
-                        />
                         <Text color={primaryTextColor} size="sm" weight="600" component="span">
                             {subreddit}
                         </Text>
