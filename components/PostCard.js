@@ -67,12 +67,7 @@ export default function PostCard({ post }) {
     return (
         // Get snapshot of this element
         <Container p="sm">
-            <Paper px={'lg'} py={'lg'} shadow="xl">
-                <Card shadow="sm" p="lg">
-                    <Card.Section>
-                        <Image src={image} height={500} fit={'contain'} alt={title} />
-                    </Card.Section>
-                </Card>
+            <Paper px={'lg'} py={'sm'} shadow="xl">
                 <Text color={primaryTextColor} mt={10}>
                     <Group spacing={'xs'}>
                         <Text color={primaryTextColor} size="sm" weight="600" component="span">
@@ -87,7 +82,7 @@ export default function PostCard({ post }) {
                         >
                             •
                         </Text>
-
+                        
                         <Text
                             style={{ verticalAlign: 'middle', display: 'inline-block' }}
                             size="sm"
@@ -98,11 +93,11 @@ export default function PostCard({ post }) {
                         </Text>
                     </Group>
                 </Text>
-                <Title style={{ color: primaryTextColor }} order={4} mt={10}>
+                <Title style={{ color: primaryTextColor }} order={4} mt={5}>
                     {title}
                 </Title>
-
-                <Box mt={'lg'}>
+                
+                <Box mt={'sm'}>
                     <Center inline>
                         <ArrowNarrowUp size={20} style={{ verticalAlign: 'middle' }} />
                         <Box>{upvotes}</Box>
@@ -115,12 +110,19 @@ export default function PostCard({ post }) {
                         <Calendar size={20} style={{ verticalAlign: 'middle' }} />
                         <Box>{created}</Box>
                     </Center>
-
+                    
                     <RenderAwards />
-
-                    <ReactMarkdown components={{ image: img => console.log(img) }}>
-                        {body}
-                    </ReactMarkdown>
+                    { image ? (
+                        <Card shadow="sm" p="lg" mt={'md'}>
+                            <Card.Section>
+                                <Image src={image} height={500} fit={'contain'} alt={title} />
+                            </Card.Section>
+                        </Card>
+                    ) : (
+                        <ReactMarkdown components={{ image: img => console.log(img) }}>
+                            {body}
+                        </ReactMarkdown>
+                    ) }
                 </Box>
             </Paper>
         </Container>
