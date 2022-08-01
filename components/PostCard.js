@@ -1,6 +1,6 @@
 import {
     Card,
-    Image,
+    Image as MantineImage,
     Text,
     useMantineTheme,
     Title,
@@ -12,11 +12,17 @@ import {
     Container,
     Group
 } from '@mantine/core';
+import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { ArrowBigTop as ArrowNarrowUp, MessageCircle2, Calendar } from 'tabler-icons-react';
 
+import { toPng } from 'html-to-image';
+
 export default function PostCard({ post }) {
     const theme = useMantineTheme();
+
+    const [dataUrl, setDataUrl] = useState('');
+    const postRef = useRef();
 
     const primaryTextColor =
         theme.colorScheme === 'dark' ? theme.colors.gray[2] : theme.colors.dark[9];
@@ -64,10 +70,17 @@ export default function PostCard({ post }) {
         );
     };
 
+    useEffect(() => {
+        toPng(postRef.current).then(dataUrl => {
+            setDataUrl(dataUrl);
+        });
+    }, []);
+
     return (
         // Get snapshot of this element
         <Container p="sm">
-            <Paper px={'lg'} py={'sm'} shadow="xl">
+            <img src={dataUrl} />
+            <Paper ref={postRef} px={'lg'} py={'sm'} shadow="xl">
                 <Text color={primaryTextColor} mt={10}>
                     <Group spacing={'xs'}>
                         <Text color={primaryTextColor} size="sm" weight="600" component="span">
@@ -82,9 +95,13 @@ export default function PostCard({ post }) {
                         >
                             •
                         </Text>
-                        
+
                         <Text
-                            style={{ verticalAlign: 'middle', display: 'inline-block' }}
+                            style={{
+                                verticalAlign: 'middle',
+                                display: 'inline-block',
+                                whiteSpace: 'nowrap'
+                            }}
                             size="sm"
                             color={secondaryTextColor}
                             component="span"
@@ -96,7 +113,7 @@ export default function PostCard({ post }) {
                 <Title style={{ color: primaryTextColor }} order={4} mt={5}>
                     {title}
                 </Title>
-                
+
                 <Box mt={'sm'}>
                     <Center inline>
                         <ArrowNarrowUp size={20} style={{ verticalAlign: 'middle' }} />
@@ -110,19 +127,24 @@ export default function PostCard({ post }) {
                         <Calendar size={20} style={{ verticalAlign: 'middle' }} />
                         <Box>{created}</Box>
                     </Center>
-                    
+
                     <RenderAwards />
-                    { image ? (
+                    {image ? (
                         <Card shadow="sm" p="lg" mt={'md'}>
                             <Card.Section>
-                                <Image src={image} height={500} fit={'contain'} alt={title} />
+                                <MantineImage
+                                    src={image}
+                                    height={500}
+                                    fit={'contain'}
+                                    alt={title}
+                                />
                             </Card.Section>
                         </Card>
                     ) : (
                         <ReactMarkdown components={{ image: img => console.log(img) }}>
                             {body}
                         </ReactMarkdown>
-                    ) }
+                    )}
                 </Box>
             </Paper>
         </Container>
