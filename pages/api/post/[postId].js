@@ -19,7 +19,9 @@ export default async function handler(req, res) {
             num_comments: comments,
             locked,
             all_awardings,
-            selftext: body
+            selftext: body,
+            link_flair_text,
+            link_flair_background_color
         } = post;
 
         const awards = all_awardings.map(award => {
@@ -50,7 +52,9 @@ export default async function handler(req, res) {
                 comments,
                 created: new Date(created * 1000).toLocaleDateString(),
                 locked,
-                awards
+                awards,
+                link_flair_text,
+                link_flair_background_color
             }
         });
     } catch (error) {
