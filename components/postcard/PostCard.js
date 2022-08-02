@@ -4,8 +4,6 @@ import {
     Text,
     useMantineTheme,
     Title,
-    Avatar,
-    AvatarsGroup,
     Box,
     Center,
     Paper,
@@ -15,6 +13,7 @@ import {
 
 import ReactMarkdown from 'react-markdown';
 import { ArrowBigTop as ArrowNarrowUp, MessageCircle2, Calendar } from 'tabler-icons-react';
+import { Awards } from './Awards';
 
 export default function PostCard({ post, postRef }) {
     const theme = useMantineTheme();
@@ -41,31 +40,6 @@ export default function PostCard({ post, postRef }) {
         link_flair_background_color
     } = post;
 
-    const RenderAwards = () => {
-        const topThree = awards
-            .sort((a, b) => a - b)
-            .slice(0, 3)
-            .map(award => award.icon.url);
-
-        const totalAwards = awards.reduce((acc, award) => acc + award.count, 0);
-
-        if (awards.length === 0) {
-            return null;
-        }
-
-        return (
-            <Center inline style={{ marginLeft: '10px' }}>
-                <AvatarsGroup size={20} limit={3} total={topThree < 3 && totalAwards}>
-                    {topThree.map(award => {
-                        return <Avatar src={award} key={award} />;
-                    })}
-                </AvatarsGroup>
-                <Box style={{ fontWeight: 600, fontSize: '15px', display: 'inline' }}>
-                    {totalAwards}
-                </Box>
-            </Center>
-        );
-    };
     return (
         // Get snapshot of this element
         <Container p="sm">
@@ -125,8 +99,7 @@ export default function PostCard({ post, postRef }) {
                         />
                         <Box>{created}</Box>
                     </Center>
-
-                    <RenderAwards />
+                    <Awards awards={awards} />
                     {image ? (
                         <Card shadow="sm" p="lg" mt={'md'}>
                             <Card.Section>

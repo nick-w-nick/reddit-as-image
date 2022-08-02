@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, Global } from '@mantine/core';
 
-import './styles/styles.css';
+import '../styles/styles.css';
 
 export default function App(props) {
     const { Component, pageProps } = props;

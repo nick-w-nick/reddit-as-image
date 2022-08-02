@@ -1,6 +1,5 @@
 import {
     Container,
-    Button,
     ActionIcon,
     useMantineColorScheme,
     Group,
@@ -9,9 +8,8 @@ import {
     Title
 } from '@mantine/core';
 
-import { Sun, MoonStars, BrandReddit, Download } from 'tabler-icons-react';
+import { Sun, MoonStars } from 'tabler-icons-react';
 
-import PostCard from '../components/PostCard.js';
 import usePost from '../hooks/usePost.js';
 import RedditLinkInput from '../components/RedditLinkInput.js';
 import { PostCardContainer } from '../components/PostCardContainer.js';
@@ -23,14 +21,14 @@ export default function Index() {
     const theme = useMantineTheme();
     const dark = colorScheme === 'dark';
     return (
-        <Container size={'md'}>
+        <Container size="md">
             <Title className="hero" color={theme.colors.indigo}>
                 <span className="reddit">reddit</span>
                 <br /> as <br />
                 image
             </Title>
-            <Group align={'end'}>
-                <MediaQuery smallerThan={'xs'} styles={{ width: '100%', flex: 'none !important' }}>
+            <Group align="end">
+                <MediaQuery smallerThan="xs" styles={{ width: '100%', flex: 'none !important' }}>
                     <RedditLinkInput
                         fetchPost={fetchPost}
                         post={post}
@@ -38,9 +36,8 @@ export default function Index() {
                         loading={loading}
                     />
                 </MediaQuery>
-
                 <ActionIcon
-                    size={'36px'}
+                    size="36px"
                     variant="outline"
                     color={dark ? 'yellow' : 'blue'}
                     onClick={() => toggleColorScheme()}

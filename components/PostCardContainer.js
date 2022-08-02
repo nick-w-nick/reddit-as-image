@@ -2,7 +2,7 @@ import { Button, Container, Group } from '@mantine/core';
 import { toBlob } from 'html-to-image';
 import { useRef } from 'react';
 import { Download } from 'tabler-icons-react';
-import PostCard from './PostCard';
+import PostCard from './postcard/PostCard';
 import { saveAs } from 'file-saver';
 
 export const PostCardContainer = ({ post }) => {
