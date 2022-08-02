@@ -3,6 +3,7 @@ import { toBlob } from 'html-to-image';
 import { useRef } from 'react';
 import { Download } from 'tabler-icons-react';
 import PostCard from './PostCard';
+import { saveAs } from 'file-saver';
 
 export const PostCardContainer = ({ post }) => {
     const postRef = useRef();
