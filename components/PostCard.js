@@ -12,17 +12,12 @@ import {
     Container,
     Group
 } from '@mantine/core';
-import { useEffect, useRef, useState } from 'react';
+
 import ReactMarkdown from 'react-markdown';
 import { ArrowBigTop as ArrowNarrowUp, MessageCircle2, Calendar } from 'tabler-icons-react';
 
-import { toPng } from 'html-to-image';
-
-export default function PostCard({ post }) {
+export default function PostCard({ post, postRef }) {
     const theme = useMantineTheme();
-
-    const [dataUrl, setDataUrl] = useState('');
-    const postRef = useRef();
 
     const primaryTextColor =
         theme.colorScheme === 'dark' ? theme.colors.gray[2] : theme.colors.dark[9];
@@ -41,7 +36,9 @@ export default function PostCard({ post }) {
         comments,
         created,
         locked,
-        awards
+        awards,
+        link_flair_text,
+        link_flair_background_color
     } = post;
 
     const RenderAwards = () => {
@@ -69,17 +66,9 @@ export default function PostCard({ post }) {
             </Center>
         );
     };
-
-    useEffect(() => {
-        toPng(postRef.current).then(dataUrl => {
-            setDataUrl(dataUrl);
-        });
-    }, []);
-
     return (
         // Get snapshot of this element
         <Container p="sm">
-            <img src={dataUrl} />
             <Paper ref={postRef} px={'lg'} py={'sm'} shadow="xl">
                 <Text color={primaryTextColor} mt={10}>
                     <Group spacing={'xs'}>
@@ -110,21 +99,30 @@ export default function PostCard({ post }) {
                         </Text>
                     </Group>
                 </Text>
-                <Title style={{ color: primaryTextColor }} order={4} mt={5}>
+                <Title style={{ color: primaryTextColor }} order={4} mt={'xs'}>
                     {title}
                 </Title>
 
-                <Box mt={'sm'}>
+                <Box mt={''}>
                     <Center inline>
-                        <ArrowNarrowUp size={20} style={{ verticalAlign: 'middle' }} />
+                        <ArrowNarrowUp
+                            size={20}
+                            style={{ verticalAlign: 'middle', marginRight: '5px' }}
+                        />
                         <Box>{upvotes}</Box>
                     </Center>
                     <Center inline style={{ marginLeft: '10px' }}>
-                        <MessageCircle2 size={20} style={{ verticalAlign: 'middle' }} />
+                        <MessageCircle2
+                            size={20}
+                            style={{ verticalAlign: 'middle', marginRight: '5px' }}
+                        />
                         <Box>{comments}</Box>
                     </Center>
                     <Center inline style={{ marginLeft: '10px' }}>
-                        <Calendar size={20} style={{ verticalAlign: 'middle' }} />
+                        <Calendar
+                            size={20}
+                            style={{ verticalAlign: 'middle', marginRight: '5px' }}
+                        />
                         <Box>{created}</Box>
                     </Center>
 

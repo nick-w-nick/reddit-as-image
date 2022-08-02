@@ -14,10 +14,11 @@ import { Sun, MoonStars, BrandReddit, Download } from 'tabler-icons-react';
 import PostCard from '../components/PostCard.js';
 import usePost from '../hooks/usePost.js';
 import RedditLinkInput from '../components/RedditLinkInput.js';
+import { PostCardContainer } from '../components/PostCardContainer.js';
 
 export default function Index() {
     const { post, loading, error, fetchPost } = usePost();
-    
+
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const theme = useMantineTheme();
     const dark = colorScheme === 'dark';
@@ -37,7 +38,7 @@ export default function Index() {
                         loading={loading}
                     />
                 </MediaQuery>
-                
+
                 <ActionIcon
                     size={'36px'}
                     variant="outline"
@@ -48,25 +49,7 @@ export default function Index() {
                     {dark ? <Sun size={20} /> : <MoonStars size={20} />}
                 </ActionIcon>
             </Group>
-            {post && (
-                <Container
-                    mt={'30px'}
-                    p="md"
-                    style={{
-                        border: '3px solid white',
-                        borderRadius: '10px'
-                    }}
-                >
-                    <Container p="sm">
-                        <Group position="right">
-                            <Button leftIcon={<Download size={16} />} variant="outline">
-                                Export
-                            </Button>
-                        </Group>
-                    </Container>
-                    <PostCard post={post} />
-                </Container>
-            )}
+            {post && <PostCardContainer post={post} />}
         </Container>
     );
 }
