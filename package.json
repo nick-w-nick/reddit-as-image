@@ -35,7 +35,6 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-markdown": "^8.0.3",
-        "snoowrap": "^1.23.0",
         "tabler-icons-react": "^1.39.0"
     },
     "type": "module"
