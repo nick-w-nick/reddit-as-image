@@ -7,13 +7,17 @@ import { saveAs } from 'file-saver';
 
 export const PostCardContainer = ({ post }) => {
     const postRef = useRef();
-
+    
     const handleGetPostAsImage = e => {
+        const { image } = post;
+        const imageName = image.replace('https://i.redd.it/', '').split('.')[0];
+        const saveAsName = imageName ? `reddit-as-image_${imageName}.png` : 'reddit-as-image.png';
+        
         toBlob(postRef.current, { cacheBust: true }).then(function (blob) {
-            saveAs(blob, 'my-node.png');
+            saveAs(blob, saveAsName);
         });
     };
-
+    
     return (
         <Container
             mt={'30px'}
