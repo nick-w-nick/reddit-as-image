@@ -1,40 +1,52 @@
-import Axios from 'axios';
-import { useState } from 'react';
+import {
+    Container,
+    ActionIcon,
+    useMantineColorScheme,
+    Group,
+    MediaQuery,
+    useMantineTheme,
+    Title
+} from '@mantine/core';
 
-import { TextInput, Container, Button, ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { Sun, MoonStars } from 'tabler-icons-react';
 
-import PostCard from '../components/PostCard.js';
-export default function Index(props) {
-    const parseIdFromURL = (url) => {
-        const postId = url.split('comments/')[1].split('/')[0];
-        return postId;
-    };
-    
-    const getPost = async (postUrl) => {
-        const postId = parseIdFromURL(postUrl);
-        const response = await Axios.get(`/api/post/${postId}`);
-        return setPost({ ...post, id: postId, data: response.data });
-    };
-    
-    const [post, setPost] = useState({ url: null, id: null, data: null });
-    
+import usePost from '../hooks/usePost.js';
+import RedditLinkInput from '../components/RedditLinkInput.js';
+import { PostCardContainer } from '../components/PostCardContainer.js';
+
+export default function Index() {
+    const { post, loading, error, fetchPost } = usePost();
+
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+    const theme = useMantineTheme();
     const dark = colorScheme === 'dark';
     return (
-        <Container>
-            <ActionIcon
-                variant="outline"
-                color={dark ? 'yellow' : 'blue'}
-                onClick={() => toggleColorScheme()}
-                title="Toggle color scheme"
-            >
-                {dark ? <Sun size={18} /> : <MoonStars size={18} />}
-            </ActionIcon>
-            <TextInput label="Post URL" description="Link to the reddit post" style={{ width: 400 }} mb={10} onChange={e => setPost({ ...post, url: e.target.value })} />
-            <Button mb={20} onClick={async () => await getPost(post.url)}>Get Post</Button>
-            
-            {post.data && <PostCard data={post.data}/>}
+        <Container size="md">
+            <Title className="hero" color={theme.colors.indigo}>
+                <span className="reddit">reddit</span>
+                <br /> as <br />
+                image
+            </Title>
+            <Group align="end">
+                <MediaQuery smallerThan="xs" styles={{ width: '100%', flex: 'none !important' }}>
+                    <RedditLinkInput
+                        fetchPost={fetchPost}
+                        post={post}
+                        error={error}
+                        loading={loading}
+                    />
+                </MediaQuery>
+                <ActionIcon
+                    size="36px"
+                    variant="outline"
+                    color={dark ? 'yellow' : 'blue'}
+                    onClick={() => toggleColorScheme()}
+                    title="Toggle color scheme"
+                >
+                    {dark ? <Sun size={20} /> : <MoonStars size={20} />}
+                </ActionIcon>
+            </Group>
+            {post && <PostCardContainer post={post} />}
         </Container>
     );
-};
+}
